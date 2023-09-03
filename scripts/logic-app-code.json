@@ -1,0 +1,57 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/<file-name>.json#",
+    "actions": {
+      "Create_job": {
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['azureautomation']['connectionId']"
+            }
+          },
+          "method": "put",
+          "path": "/subscriptions/@{encodeURIComponent('<Subscription-id>')}/resourceGroups/@{encodeURIComponent('rg-Techhub-Vikas')}/providers/Microsoft.Automation/automationAccounts/@{encodeURIComponent('Azure-Automation-VV')}/jobs",
+          "queries": {
+            "runbookName": "create_acr_vv_01",
+            "wait": true,
+            "x-ms-api-version": "2015-10-31"
+          }
+        },
+        "runAfter": {},
+        "type": "ApiConnection"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      }
+    },
+    "triggers": {
+      "Recurrence": {
+        "evaluatedRecurrence": {
+          "frequency": "Minute",
+          "interval": 5
+        },
+        "recurrence": {
+          "frequency": "Minute",
+          "interval": 5
+        },
+        "type": "Recurrence"
+      }
+    }
+  },
+  "parameters": {
+    "$connections": {
+      "value": {
+        "azureautomation": {
+          "connectionId": "/subscriptions/<Subscription-id>/resourceGroups/rg-Techhub-Vikas/providers/Microsoft.Web/connections/azureautomation",
+          "connectionName": "azureautomation",
+          "id": "/subscriptions/<Subscription-id>/providers/Microsoft.Web/locations/eastus/managedApis/azureautomation"
+        }
+      }
+    }
+  }
+}
